@@ -1,50 +1,33 @@
-import re
-from nltk import download as nltk_download
-from nltk import RegexpTokenizer, FreqDist
-from nltk.corpus import stopwords
+import text_analyzer
 
-nltk_download('punkt')
-nltk_download('stopwords')
+print()
 
-file = open('text.txt', 'r')
+text_file = text_analyzer.open_file('text.txt')
+email_list = text_analyzer.get_email_list(text_file)
 
-email_regex = re.compile(r'[a-z0-9]+@[a-z0-9]+\.[a-z]+')
-email_list = [re.search(email_regex, line).group(0) for line in file if re.search(email_regex, line)]
+username_list = text_analyzer.get_usernames(email_list)
+print(f"Usernames: {username_list}")
 
-unique_email_set = set(email_list)
+domain_dict = text_analyzer.get_domains(email_list)
+print(f"Domínios com frequência: {domain_dict}")
 
-username_list = [username.split('@')[0] for username in unique_email_set]
-print(username_list)
+text_file = text_analyzer.open_file('text.txt')
+number_of_words = 8
+frequent_words = text_analyzer.get_common_words(text_file, number_of_words)
+print(f"{number_of_words} palavras mais comuns: {frequent_words}")
 
-domain_list = [domain.split('@')[1:][0] for domain in email_list]
+text_file = text_analyzer.open_file('text.txt')
+sentiment = text_analyzer.get_sentiment(text_file)
+print(f"Sentimento do texto com pontuação: {sentiment}")
 
+text_file = text_analyzer.open_file('text.txt')
+tokens_count = text_analyzer.get_token_count(text_file)
+print(f"Quantidade de tokens: {tokens_count}")
 
-domain_dict = dict.fromkeys(domain_list, 0)
+text_file = text_analyzer.open_file('text.txt')
+word_count = text_analyzer.get_word_count(text_file)
+print(f"Quantidade de palavras: {word_count}")
 
-for domain in domain_list:
-    if domain in domain_list:
-        domain_dict[domain] += 1
-
-print(domain_dict)
-
-word_list = list()
-tokenizer = RegexpTokenizer(r"\w+")
-
-for line in file:
-    lower_line = line.lower()
-    word_list.extend(tokenizer.tokenize(lower_line))
-
-print(len(word_list))
-merged_text = ' '.join(word_list)
-print(len(merged_text))
-
-stop_words = set(stopwords.words("portuguese"))
-
-
-filtered_list = [word for word in word_list if word.casefold() not in stop_words]
-
-print(len(filtered_list))
-
-word_frequency_list = FreqDist(filtered_list)
-
-print(word_frequency_list.most_common(8))
+text_file = text_analyzer.open_file('text.txt')
+char_count = text_analyzer.get_character_count(text_file)
+print(f"Quantidade de caracteres: {char_count}")
