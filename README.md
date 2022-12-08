@@ -1,6 +1,20 @@
 # desafio-copybase
 Desafio técnico do processo seletivo da Copybase
 
+# Como rodar
+Para executar a aplicação, inicie o ambiente virtual e instale as dependências
+
+```bash
+make init
+make install
+```
+
+Depois é só executar!
+
+```bash
+python app.py
+```
+
 # O desafio
 
 > Você deverá abrir o texto do link abaixo como arquivo de texto em Python e extrair algumas informações. Fique a vontade para usar a(s) biblioteca(s) que julgar mais adequada(s).
